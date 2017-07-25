@@ -1,0 +1,37 @@
+Az alkalmazással szemben támasztott követelméyek:
+
+CRUD funkcionalitás (Create, Read, Update, Delete)
+- objektum, objektumok megjelenítése (olvasásra, módosításra)
+- keresés, szûrés tetszõleges tulajdonság(ok) alapján
+- csoportosítás
+- sorbarendezés a felhasználó döntése alapján tetszõleges tulajdonság(ok) alapján (növekvõ, csökkenõ)
+- új objektum felvétele felhasználótól beolvasott adatok alapján
+- meglévõ objektum tulajdonságainak módosítása felhasználótól beolvasott adatok alapján
+- felhasználótól származó adatok validálása
+- objektum törlése
+- kiindulási adatok elkészítése, beszerzése (pl. JSON formátum)
+
+GUI, UX
+- egyszerû, célirányos, ízléses design (HTML, CSS)
+- egységes megjelenítés
+- áttekinthetõ, érthetõ GUI
+- kényelmes, önállóan felfedezhetõ használat
+- tagolt, "bolondbiztos" ûrlap 
+- felhasználóbarát
+- függetlenség a böngészõablak méretétõl (responsive)
+- könnyen követhetõ, szervezett kódok
+
+Vezérlés
+- ciklus, elágazás, függvény alkalmazása
+- tömb, objektum alkalmazása
+- objektum(ok) dinamikus megjelenitése (innerText, innerHTML, createElement)
+- adatbeolvasás ûrlapról
+- a felhasználótól származó adatok validálása
+- eseménykezelés (a dinamikus összekapcsolás és a bubbling adta lehetõségek kihasználása)
+- könnyen követhetõ, szervezett kódok
+- a kódismétlés elkerülése
+
+Tervezés, tervezés, tervezés!
+
+Téma ötletek: online értékesítõ alkalmazás szimulálása kliens oldalon (WebBrowser)
+Kávéház, Utazás belföldön, Star wars szereplõi, stb.
