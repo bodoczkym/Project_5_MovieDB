@@ -1,14 +1,40 @@
-
-function saveEventHandler() {
-    console.log("movieJSON: ", movieJSON);
-}
-
+//A keresés gombra kattintva megjeleníti a keresési eredményeket.
 function displaySearchResults() {
     $("#searchResultsContainer").html(parseMovieResults(searchInDatabase($("#searchTextBox").val())));
     var inputVal = $("#searchTextBox").val();
     var result = searchInDatabase(inputVal);
     console.log(parseMovieResults(result));
+    console.log(movieJSON);
 }
+
+//A hozzáadás gombra kattintva a megadott adatok alapján generál egy tömböt, amit a MovieJSON-hoz hozzáad. 
+function addNewFilmEventHandler() {
+    //TODO Add more secure validation.
+    var success = false;
+    success = addToDatabase();
+    console.log(movieJSON);
+    if(success) {
+        alert("Film hozzáadva az adatbázishoz.");
+    }
+    else {
+        alert("Hiba történt.");
+    }
+}
+
+function addToDatabase() {
+    var addedMovie = [];
+    addedTitle =  toTitleCase($("#addedTitle").val());
+    addedYear =  $("#addedYear").val();
+    if (addedTitle != "" && addedYear != "" && (parseInt(addedYear) <= 2017 && parseInt(addedYear) >= 1900)) {
+        addedMovie.title = addedTitle;
+        addedMovie.release_date = addedYear;
+        movieJSON.results.push(addedMovie);
+        return true;
+    }
+    else {
+        return false;
+    }
+} 
 
 /* Input alapján visszaad egy tömböt, ami a megtalált filmeket tartalmazza
 * @param input: A searchTextBox-ba beírt szöveg.
@@ -30,7 +56,7 @@ function parseMovieResults(movieArray) {
     var fullInnerHTML = "";
     if (movieArray.length == 0) {
         fullInnerHTML = "<div> Nincs találat. </div>";
-    } else if (movieArray.length == 10000){
+    } else if (movieArray.length == movieJSON.results.length){
         fullInnerHTML = "<div> Kérlek adj meg egy keresési kucsszót. </div>"
     } else {
         for (var i = 0; i < movieArray.length; i++) {
@@ -41,6 +67,12 @@ function parseMovieResults(movieArray) {
     }
     return fullInnerHTML;
 }
+//Átalakítja a stringet, hogy az első betűk nagybetűk legyenek.
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
 /* Az adatázis letöltésére szolgáló függvények.
 
 function parseApiResponse(response) {
