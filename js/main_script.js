@@ -7,7 +7,7 @@ function displaySearchResults() {
     console.log(movieJSON);
 }
 
-//A hozzáadás gombra kattintva a megadott adatok alapján generál egy tömböt, amit a MovieJSON-hoz hozzáad. 
+//A hozzáadás gombra kattintva a megadott adatok alapján meghívja a függvényt, ami generál egy tömböt, amit a MovieJSON-hoz hozzáad. Értesítést küld a felhasználónak a művelet sikerességéről.
 function addNewFilmEventHandler() {
     //TODO Add more secure validation.
     var success = false;
@@ -21,6 +21,7 @@ function addNewFilmEventHandler() {
     }
 }
 
+// A függvény beolvassa a megadott mezők adatait, és hozzáadja a MovieJSON tömbhöz a tömböt. Visszatérési értéke egy boolean, ami tájékoztat a művelet sikeréről.
 function addToDatabase() {
     var addedMovie = [];
     addedTitle =  toTitleCase($("#addedTitle").val());
@@ -28,6 +29,7 @@ function addToDatabase() {
     if (addedTitle != "" && addedYear != "" && (parseInt(addedYear) <= 2017 && parseInt(addedYear) >= 1900)) {
         addedMovie.title = addedTitle;
         addedMovie.release_date = addedYear;
+        addedMovie.poster_path = "default";
         movieJSON.results.push(addedMovie);
         return true;
     }
@@ -52,6 +54,7 @@ function searchInDatabase(input) {
     return foundMovie;
 }
 
+//A keresési lista alapján visszaad egy InnerHTML-t, ami az eredményeket adja ki.
 function parseMovieResults(movieArray) {
     var fullInnerHTML = "";
     if (movieArray.length == 0) {
@@ -72,6 +75,16 @@ function toTitleCase(str)
 {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
+
+//Lehetővé teszi, hogy az enter gomb megnyomására keressünk, nem csak a gombra való klikkeléssel.
+$('document').ready(function(){
+    $('#searchTextBox').keypress(function(e){
+        if(e.which == 13){//Enter key pressed
+           displaySearchResults();//Trigger search button click event
+        }
+    });
+
+});
 
 /* Az adatázis letöltésére szolgáló függvények.
 

@@ -732,6 +732,9 @@ ul.social-buttons li a:active {
     width: 100%;
     height: 20px;
 }
+.top-buffer { 
+  margin-top:20px; 
+}
 ::-moz-selection {
   text-shadow: none;
   background: #fed136;
