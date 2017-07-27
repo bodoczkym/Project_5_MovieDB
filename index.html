@@ -91,7 +91,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Keresés</h2>
-                    <h3 class="section-subheading text-muted">Írj be egy filmcímet az adatbázisban való kereséshez:</h3>
+                    <h3 class="section-subheading text-muted">Írj be egy filmcímet az adatbázisban való kereséshez. &nbsp;<a data-toggle="tooltip" data-placement="right" title="Filmeket módosítani és törölni csak a keresés után fogsz tudni!"><i class="glyphicon glyphicon-info-sign"></i></a></h3>
                 </div>
                     <div class="input-group">
                         <input type="text" id="searchTextBox" class="form-control" placeholder="Keresés" name="search">
@@ -111,22 +111,10 @@
                     <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
                 </div>-->
 
-                <div id="searchResultsContainer" class="container">        
+                <div class="container">        
                     <br>
-                    <div class="row top-buffer">
-                        <div class="col-sm-6 col-md-4 col-lg-3 top-buffer">
-                            <a class="page-scroll" href="#update"><img src="http://image.tmdb.org/t/p/w780/esqXMJv6PiK7GJVRwd2FA3SZUoW.jpg" class="img-responsive" alt=""></a>
-                        </div>
-                        <div class="col-sm-6 col-md-4 col-lg-3 top-buffer" >
-                            <a class="page-scroll" href="#update"><img src="http://image.tmdb.org/t/p/w780/yeBc5vpEiqIAZrbVQnl833GlBEi.jpg" class="img-responsive" alt=""></a>
-                        </div>                    
-                        <div class="col-sm-6 col-md-4 col-lg-3 top-buffer">
-                            <a class="page-scroll" href="#update"><img src="http://image.tmdb.org/t/p/w780/dN9LbVNNZFITwfaRjl4tmwGWkRg.jpg" class="img-responsive" alt=""></a>
-                        </div>
-                        <div class="col-sm-6 col-md-4 col-lg-3 top-buffer">
-                            <a class="page-scroll" href="#update"><img src="http://image.tmdb.org/t/p/w780/cpl7R5d3qwWvykRRSxdhQ0htstU.jpg" class="img-responsive" alt=""></a>
-                        </div>
-                    <br><br><br><br><br><br><br><br><br>
+                    <div id="searchResultsContainer" class="row top-buffer">
+                        <br><br><br><br><br><br><br><br><br>
                     </div>
                 </div>
             </div>
@@ -144,17 +132,17 @@
             </div>
                 <div class="input-group">
                     <span class="input-group-addon">Cím</span>
-                    <input id="addedTitle" type="text" class="form-control" name="msg" placeholder="Pl: Dunkirk">
+                    <input id="addedTitle" type="text" class="form-control" placeholder="Pl: Dunkirk">
                 </div><br>
                 <div class="input-group">
                     <span class="input-group-addon">Kiadási év</span>
-                    <input id="addedYear" type="number" class="form-control" name="msg" placeholder="Pl: 2017">
+                    <input id="addedYear" type="number" class="form-control" placeholder="Pl: 2017">
                 </div> 
             <br>
             <div class="col-lg-12 text-center">  
                 <a class="btn btn-primary" onclick="addNewFilmEventHandler();">Hozzáadás</a>  
             </div>       
-            <div id="createPlaceholder"><br><br><br><br><br><br><br><br><br><br><br>
+            <div id="createPlaceholder"><br><br><br><br><br><br><br>
             </div>
             
         </div>
@@ -166,11 +154,27 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Módosítás</h2>
-                    <h3 class="section-subheading text-muted">Alcím.</h3>
+                    
                 </div>
             </div>    
-        </div>
-        <div id="createPlaceholder"><br><br><br><br><br><br><br><br><br><br><br>
+            <div id="updateContainer" class="row" style="text-align: center;">
+            <h3 class="section-subheading text-muted" id="updateInfo">A <a href="#search" class="page-scroll"><strong>Keresés</strong></a> során kiválaszthatod a módosítani kívánt filmet.
+                <br><br><br><br><br><br><br><br><br><br><br>
+            </h3>        
+                    <div class="col-md-6" id="updateImage">
+                        
+                    </div>
+                    <div class="col-md-6 top-buffer hidden" id="updateValues">
+                        <div class="input-group">
+                            <span class="input-group-addon">Cím</span>
+                            <input id="modifyTitle" type="text" class="form-control" name="msg">
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Kiadási év</span>
+                            <input id="modifyYear" type="number" class="form-control" name="msg">
+                        </div> 
+                    </div>
+            </div>
         </div>
     </section>
 
@@ -180,16 +184,11 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Film törlése</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
-                    <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
-                    <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
-                    <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
-                </div>
+            <div id="deleteContainer" class="row" style="text-align: center;">
+                <h3 class="section-subheading text-muted">A <a href="#search" class="page-scroll"><strong>Keresés</strong></a> során kiválaszthatod a törölni kívánt filmet.</h3>
+                <br><br><br><br><br><br><br><br><br><br><br>
             </div>
         </div>
     </section>

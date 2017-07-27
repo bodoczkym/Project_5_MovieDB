@@ -735,6 +735,14 @@ ul.social-buttons li a:active {
 .top-buffer { 
   margin-top:20px; 
 }
+.image-resize{
+  width: 75%;
+  max-width: 300px;
+  height: auto;
+}
+.a-custom-color{
+  color: #2196F3;
+}
 ::-moz-selection {
   text-shadow: none;
   background: #fed136;
