@@ -64,6 +64,12 @@ h6 {
   text-transform: uppercase;
   font-weight: 700;
 }
+.btn-danger {
+  color: white;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+}
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,

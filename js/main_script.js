@@ -3,9 +3,10 @@ var modifiedMovieIndex;
 var posterUrlBase = "http:\/\/image.tmdb.org/t/p/w780";
 
 //A keresés gombra kattintva megjeleníti a keresési eredményeket.
-function displaySearchResults() {
+//TODO (BUG) A generált képekre kattintva nem tud scrollolni.
+function displaySearchResultsEventHandler() {
     $("#searchResultsContainer").html(parseMovieResults(searchInDatabaseForTitle($("#searchTextBox").val())));
-    var inputVal = $("#searchTextBox").val();
+    var inputVal = $("#deleteImage").val();
     var result = searchInDatabaseForTitle(inputVal);
     console.log(parseMovieResults(result));
     console.log(searchInDatabaseForTitle($("#searchTextBox").val()));
@@ -15,6 +16,7 @@ function displaySearchResults() {
 Értesítést küld a felhasználónak a művelet sikerességéről.*/
 function addNewFilmEventHandler() {
     //TODO Add more secure validation.
+    //TODO Az elertnél valami szebb megoldást kellene találni a tájékoztatásra.
     var success = false;
     success = addToDatabase();
     console.log(movieJSON);
@@ -39,15 +41,23 @@ function updateFilmEventHandler() {
     }
 }
 
+function deleteDatabaseEntryEventHandler() {
+    deleteConfirmation();
+}
+
 function createElementToBeModifiedEventHandler(id) {
     modifiedMovieId = id;
     $("#updateInfo").hide();
+    $("#deleteInfo").hide();
     $("#updateValues").removeClass("hidden");
+    $("#deleteButton").removeClass("hidden");
     var movieToBeModified = searchInDatabaseForId(id);
     createElementToBeModified(movieToBeModified);
     $("#modifyTitle").val(movieToBeModified.title);
     $("#modifyYear").val(parseReleaseDate(movieToBeModified.release_date));
 }
+
+
 
 function createElementToBeModified(selectedMovie) {
     var fullUrl="";
@@ -58,6 +68,7 @@ function createElementToBeModified(selectedMovie) {
         console.log(fullUrl);
     }
     $("#updateImage").html("<div class=\"col-sm-12 col-md-12 col-lg-12 top-buffer\"><img id=\""+ selectedMovie.id +"\" src=\"" + fullUrl +"\" class=\"image-resize\"></div>");
+    $("#deleteImage").html("<div class=\"col-sm-12 col-md-12 col-lg-12 top-buffer\"><img id=\""+ selectedMovie.id +"\" src=\"" + fullUrl +"\" class=\"image-resize\"></div>");
 }
 
 //Paraméterként feldogozza a film dátumát, és visszaadja az évet.
@@ -163,12 +174,30 @@ function parseMovieResults(movieArray) {
     }
     return fullInnerHTML;
 }
+
+function deleteConfirmation() {
+    var messageText;
+    if (confirm("Biztosan ki akarod törölni ezt a filmet az adatbázisból?") == true) {
+        $("#updateInfo").show();
+        $("#deleteInfo").show();
+        $("#updateValues").addClass("hidden");
+        $("#deleteButton").addClass("hidden");
+        $("#updateImage").html("");
+        $("#deleteImage").html("");
+        txt = "Film törölve!";
+    } else {
+        txt = "Művelet megszakítva.";
+    }
+    alert(txt);
+}
+
 //Átalakítja a stringet, hogy az első betűk nagybetűk legyenek.
 function toTitleCase(str)
 {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
+//TODO Nem megy az enterrel való keresés.
 //Lehetővé teszi, hogy az enter gomb megnyomására keressünk, nem csak a gombra való klikkeléssel.
 $('document').ready(function(){
     $('#searchTextBox').keypress(function(e){
@@ -180,11 +209,12 @@ $('document').ready(function(){
 });
 
 
-
+/*
 //Toggle popover at the search section.
-$(document).ready(function(){
+$("document").ready(function(){
     $('[data-toggle="popover"]').popover();   
 });
+*/
 
 //Returns a random int between the listed arguments.
 function getRandomInt(min, max) {

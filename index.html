@@ -96,7 +96,7 @@
                     <div class="input-group">
                         <input type="text" id="searchTextBox" class="form-control" placeholder="Keresés" name="search">
                             <div class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="displaySearchResults();"><i class="glyphicon glyphicon-search"></i></button>
+                                <button class="btn btn-default" type="button" onclick="displaySearchResultsEventHandler();"><i class="glyphicon glyphicon-search"></i></button>
                             </div>
                     </div>
             </div>
@@ -158,25 +158,30 @@
                 </div>
             </div>    
             <div id="updateContainer" class="row" style="text-align: center;">
-            <h3 class="section-subheading text-muted" id="updateInfo">A <a href="#search" class="page-scroll"><strong>Keresés</strong></a> során kiválaszthatod a módosítani kívánt filmet.
-                <br><br><br><br><br><br><br><br><br><br><br>
-            </h3>        
-                    <div class="col-md-6" id="updateImage">
-                        
-                    </div>
-                    <div class="col-md-6 top-buffer hidden" id="updateValues">
-                        <div class="input-group">
-                            <span class="input-group-addon">Cím</span>
-                            <input id="modifyTitle" type="text" class="form-control" name="msg">
-                        </div><br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Kiadási év</span>
-                            <input id="modifyYear" type="number" class="form-control" name="msg">
-                        </div><br>
-                        <div class="text-center">  
+                <h3 class="section-subheading text-muted" id="updateInfo">A <a href="#search" class="page-scroll"><strong>Keresés</strong></a> során kiválaszthatod a módosítani kívánt filmet.
+                    <br><br><br><br><br><br><br><br><br><br><br>
+                </h3>        
+                <div class="col-md-6" id="updateImage">
+                    
+                </div>
+                <div class="col-md-6 top-buffer hidden" id="updateValues">
+                    <div class="input-group">
+                        <span class="input-group-addon">Cím</span>
+                        <input id="modifyTitle" type="text" class="form-control" name="msg">
+                    </div><br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Kiadási év</span>
+                        <input id="modifyYear" type="number" class="form-control" name="msg">
+                    </div><br>
+                    <div class="row">
+                        <div class=" text-center col-md-6">  
                             <a class="btn btn-primary" onclick="updateFilmEventHandler();">Módosítás</a>  
-                        </div>    
+                        </div>
+                        <div class="text-center col-md-6">  
+                            <a class="btn btn-danger page-scroll" href= "#delete">Ugrás a törléshez</a>  
+                        </div> 
                     </div>
+                </div>
             </div>
         </div>
     </section>
@@ -190,8 +195,18 @@
                 </div>
             </div>
             <div id="deleteContainer" class="row" style="text-align: center;">
-                <h3 class="section-subheading text-muted">A <a href="#search" class="page-scroll"><strong>Keresés</strong></a> során kiválaszthatod a törölni kívánt filmet.</h3>
-                <br><br><br><br><br><br><br><br><br><br><br>
+                <h3 class="section-subheading text-muted" id="deleteInfo">A <a href="#search" class="page-scroll"><strong>Keresés</strong></a> során kiválaszthatod a törölni kívánt filmet.
+                    <br><br><br><br><br><br><br><br><br><br><br>
+                </h3>
+                
+                <div class="col-md-6" id="deleteImage">
+                    
+                </div>
+                <div class="col-md-6 top-buffer hidden" id="deleteButton">
+                    <div class="text-center">  
+                        <a class="btn btn-l1 btn-danger" onclick="deleteDatabaseEntryEventHandler();">Törlés</a>  
+                    </div>    
+                </div>
             </div>
         </div>
     </section>
