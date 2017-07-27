@@ -1,10 +1,14 @@
+var modifiedMovieId;
+var modifiedMovieIndex;
+var posterUrlBase = "http:\/\/image.tmdb.org/t/p/w780";
+
 //A keresés gombra kattintva megjeleníti a keresési eredményeket.
 function displaySearchResults() {
     $("#searchResultsContainer").html(parseMovieResults(searchInDatabaseForTitle($("#searchTextBox").val())));
     var inputVal = $("#searchTextBox").val();
     var result = searchInDatabaseForTitle(inputVal);
     console.log(parseMovieResults(result));
-    console.log(movieJSON);
+    console.log(searchInDatabaseForTitle($("#searchTextBox").val()));
 }
 
 /*A hozzáadás gombra kattintva a megadott adatok alapján meghívja a függvényt, ami generál egy tömböt, amit a MovieJSON-hoz hozzáad. 
@@ -22,10 +26,23 @@ function addNewFilmEventHandler() {
     }
 }
 
+//TODO Leave more space, and align the fields vertically, and relative to the poster.
+function updateFilmEventHandler() {
+    var success = false;
+    success = updateDatabase();
+    console.log("updatedJSON: ", movieJSON);
+    if(success) {
+        alert("Film módosítva.");
+    }
+    else {
+        alert("Hiba történt.");
+    }
+}
+
 function createElementToBeModifiedEventHandler(id) {
+    modifiedMovieId = id;
     $("#updateInfo").hide();
     $("#updateValues").removeClass("hidden");
-    
     var movieToBeModified = searchInDatabaseForId(id);
     createElementToBeModified(movieToBeModified);
     $("#modifyTitle").val(movieToBeModified.title);
@@ -33,26 +50,56 @@ function createElementToBeModifiedEventHandler(id) {
 }
 
 function createElementToBeModified(selectedMovie) {
-    $("#updateImage").html("<div class=\"col-sm-12 col-md-12 col-lg-12 top-buffer\"><img id=\""+ selectedMovie.id +"\" src=\"http:\/\/image.tmdb.org/t/p/w780"+ selectedMovie.poster_path +"\" class=\"image-resize\"></div>");
+    var fullUrl="";
+    if (selectedMovie.poster_path == null || selectedMovie.poster_path == undefined || selectedMovie.poster_path == "default") {
+        fullUrl = "./img/default_poster.jpg"
+    } else {
+        fullUrl = posterUrlBase + selectedMovie.poster_path;
+        console.log(fullUrl);
+    }
+    $("#updateImage").html("<div class=\"col-sm-12 col-md-12 col-lg-12 top-buffer\"><img id=\""+ selectedMovie.id +"\" src=\"" + fullUrl +"\" class=\"image-resize\"></div>");
 }
 
 //Paraméterként feldogozza a film dátumát, és visszaadja az évet.
 function parseReleaseDate(date) {
-    var splittedArray= date.split("-");
+    if (date.length > 4) {var splittedArray= date.split("-");
     return parseInt(splittedArray[0]);
- }
+    } else {
+        return date;
+    }
+}
 
 // A függvény beolvassa a megadott mezők adatait, és hozzáadja a MovieJSON tömbhöz a tömböt. Visszatérési értéke egy boolean, ami tájékoztat a művelet sikeréről.
-//TODO id generálása a módosítás funckió működéséhez.
 function addToDatabase() {
     var addedMovie = [];
     addedTitle =  toTitleCase($("#addedTitle").val());
     addedYear =  $("#addedYear").val();
-    if (addedTitle != "" && addedYear != "" && (parseInt(addedYear) <= 2017 && parseInt(addedYear) >= 1900)) {
+    if (addedTitle != "" && addedYear != "" && (parseInt(addedYear) <= 2017 && parseInt(addedYear) >= 1880)) {
         addedMovie.title = addedTitle;
         addedMovie.release_date = addedYear;
-        addedMovie.poster_path = "default";
+        addedMovie.poster_path = "default"
+        addedMovie.id = getRandomInt(10000, 10000000).toString();
         movieJSON.results.push(addedMovie);
+        return true;
+    }
+    else {
+        return false;
+    }
+} 
+
+// A függvény beolvassa a megadott mezők adatait, és frissíti a MovieJSON tömbhöt az új adatokkal. Visszatérési értéke egy boolean, ami tájékoztat a művelet sikeréről.
+function updateDatabase() {
+    var modifiedMovie = searchInDatabaseForId(modifiedMovieId);
+    console.log("to be modified movie", modifiedMovie);
+    modifiedTitle = $("#modifyTitle").val();
+    modifiedYear = $("#modifyYear").val();
+    
+    if (parseInt(modifiedYear) <= 2017 && parseInt(modifiedYear) >= 1880) {
+        modifiedMovie.title = modifiedTitle;
+        modifiedMovie.release_date = modifiedYear;
+        movieJSON.results.splice(modifiedMovieIndex, 1);
+        movieJSON.results.push(modifiedMovie);
+        console.log(movieJSON);
         return true;
     }
     else {
@@ -79,12 +126,12 @@ function searchInDatabaseForTitle(input) {
 * @param id: A filmhez tartozó id, ami a kattintott képhez van rendelve, ezt olvassa be a függvény.
 */
 function searchInDatabaseForId(id) { 
-    console.log(id);
     var movieToBeModified = [];
     //Ha a keresett kifejezés megtalálható bármelyik címben, akkor azt a tömböt berakja a
     for (var i = 0; i < movieJSON.results.length; i++) {
         if (movieJSON.results[i].id == id) {
             movieToBeModified = movieJSON.results[i];
+            modifiedMovieIndex = i;
         }
     }
     console.log(movieToBeModified);
@@ -94,6 +141,8 @@ function searchInDatabaseForId(id) {
 //A keresési lista alapján visszaad egy InnerHTML-t, ami az eredményeket adja ki.
 //TODO Szépre formázni a hibaüzeneteket.
 function parseMovieResults(movieArray) {
+    var fullUrl= ""; 
+    var hasPoster = true;
     var fullInnerHTML = "";
     if (movieArray.length == 0) {
         fullInnerHTML = "<div> Nincs találat. </div><br><br><br><br><br><br><br><br>";
@@ -101,7 +150,15 @@ function parseMovieResults(movieArray) {
         fullInnerHTML = "<div> Kérlek adj meg egy keresési kucsszót. </div><br><br><br><br><br><br><br><br>"
     } else {
         for (var i = 0; i < movieArray.length; i++) {
-            fullInnerHTML += "<div class=\"col-sm-6 col-md-4 col-lg-3 top-buffer\"><a class=\"page-scroll\" href=\"#update\"><img id=\""+ movieArray[i].id +"\" onclick=\"createElementToBeModifiedEventHandler(this.id);\" src=\"http:\/\/image.tmdb.org/t/p/w780"+ movieArray[i].poster_path +"\" class=\"img-responsive\"></a></div>";
+            if (movieArray[i].poster_path == null || movieArray[i].poster_path == undefined) {
+                continue;
+            } else if (movieArray[i].poster_path == "default") {
+                fullUrl = "./img/default_poster.jpg"
+            } else {
+                fullUrl = posterUrlBase + movieArray[i].poster_path;
+                console.log(fullUrl);
+            }
+            fullInnerHTML += "<div class=\"col-sm-6 col-md-4 col-lg-3 top-buffer\"><a class=\"page-scroll\" href=\"#update\"><img id=\""+ movieArray[i].id +"\" onclick=\"createElementToBeModifiedEventHandler(this.id);\" src=\" " + fullUrl +"\" class=\"img-responsive\"></a></div>";
         }
     }
     return fullInnerHTML;
@@ -123,10 +180,16 @@ $('document').ready(function(){
 });
 
 
+
 //Toggle popover at the search section.
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();   
 });
+
+//Returns a random int between the listed arguments.
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 /* Az adatázis letöltésére szolgáló függvények.
 
