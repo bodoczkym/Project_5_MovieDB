@@ -292,6 +292,11 @@ section h2.section-heading {
   margin-top: 0;
   margin-bottom: 15px;
 }
+section h2.section-heading-new {
+  font-size: 40px;
+  margin-top: -70px;
+  margin-bottom: 15px;
+}
 section h3.section-subheading {
   font-size: 16px;
   font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -739,15 +744,25 @@ ul.social-buttons li a:active {
     height: 20px;
 }
 .top-buffer { 
-  margin-top:20px; 
+  margin-top:15px; 
 }
 .image-resize{
   width: 75%;
   max-width: 300px;
   height: auto;
 }
+.grid-images {
+    max-height: 100%;
+    max-width: 100%;
+    display: block;
+}
 .a-custom-color{
   color: #2196F3;
+}
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }
 ::-moz-selection {
   text-shadow: none;
