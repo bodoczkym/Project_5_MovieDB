@@ -756,6 +756,11 @@ ul.social-buttons li a:active {
     max-width: 100%;
     display: block;
 }
+.row.fix {
+  display: flex;
+  flex-wrap: wrap;
+  width:98%; /*not always necessary*/
+}
 .a-custom-color{
   color: #2196F3;
 }
